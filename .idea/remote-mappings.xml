@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteMappingsManager">
+    <list>
+      <list>
+        <remote-mappings server-id="NodeJS@ssh://root@localhost:5555">
+          <settings>
+            <list>
+              <mapping local-root="~/Documents/personalProjects/awe_frontend/src/app" remote-root="/app/src" />
+            </list>
+          </settings>
+        </remote-mappings>
+      </list>
+    </list>
+  </component>
+</project>
