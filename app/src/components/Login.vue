@@ -15,12 +15,12 @@
                 </p>
             </div>
             <div>
-                <input class="button is-primary" type="submit" v-text="Login" @click="login"/>
+                <input class="button is-primary" type="submit" value="Login" @click="login"/>
             </div>
-            <div>
-                <span v-if="errors.non_field_errors">{{errors.non_field_errors[0]}}</span>
-                <span v-else-if="errors.username">Username: {{errors.username[0]}}</span>
-                <span v-else-if="errors.password">Password: {{errors.password[0]}}</span>
+            <div class="error-container">
+                <span class="error" v-if="errors.non_field_errors">{{errors.non_field_errors[0]}}</span>
+                <span class="error" v-else-if="errors.username">Username: {{errors.username[0]}}</span>
+                <span class="error" v-else-if="errors.password">Password: {{errors.password[0]}}</span>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
         methods: {
             async login () {
                 await this.$store.dispatch('login/fetchTokens', {username: this.username, password: this.password})
-                this.$router.push({name: 'HelloWorld'})
+                this.$router.push({name: 'Students'})
             }
         },
         computed: {
@@ -62,6 +62,20 @@
         padding: 60px;
         border-radius: 10px;
         margin: 30px auto;
+    }
+
+    h1 {
+        font-weight: 800;
+        font-size: 2em;
+        margin: 20px;
+    }
+
+    .error-container {
+        margin: 20px;
+    }
+
+    .error {
+        color: red;
     }
 
 </style>

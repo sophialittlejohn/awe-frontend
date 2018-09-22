@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="navbar-menu">
-                <div class="navbar-start">
+                <div class="navbar-start go-home" @click="$router.push({name: 'HelloWorld'})">
                     <div class="nav-bar-flex">
                     <img class="my-logo" :src="logo" alt="logo"/>
                     <span class="my-logo-description">Ahead With English</span>
@@ -55,14 +55,11 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .my-logo {
         height: 60px;
         width: 35px;
-    }
-
-    .my-logo-description {
-
+        margin-right: 10px;
     }
 
     .nav-bar-flex {
@@ -71,6 +68,12 @@
         align-items: center;
         height: 100%;
         width: 120%;
+    }
+    
+    .go-home {
+        &:hover {
+            cursor: pointer;
+         }
     }
 
 </style>
