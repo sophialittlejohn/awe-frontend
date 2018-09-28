@@ -27,12 +27,12 @@ const router = new VueRouter({
                 name: 'Students',
                 component: Students,
                 beforeEnter: stayLoggedIn,
-                children: [
-                    {
-                        path: ':id',
-                        component: StudentDetail
-                    },
-                ]
+            },
+            {
+                path: '/student/:id',
+                name: 'StudentDetail',
+                component: StudentDetail,
+                beforeEnter: stayLoggedIn,
             },
             {
                 path: '/login',

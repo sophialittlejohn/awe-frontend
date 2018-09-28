@@ -10,7 +10,7 @@
             </div>
             <div class="field">
                 <p class="control has-icons-left my-input-field">
-                    <input class="input" type="password" placeholder="Password" v-model="password">
+                    <input class="input" type="password" placeholder="Password" v-model="password" @keyup.enter="login">
                     <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
                 </p>
             </div>
@@ -39,7 +39,7 @@
             async login () {
                 await this.$store.dispatch('login/fetchTokens', {username: this.username, password: this.password})
                 this.$router.push({name: 'Students'})
-            }
+            },
         },
         computed: {
             errors () {

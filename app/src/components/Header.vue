@@ -1,6 +1,6 @@
 <template>
-    <div class="has-background-grey-light">
-        <div class="has-background-grey-light container navbar">
+    <div class="has-background-white-ter navbar-background">
+        <div class="has-background-white-ter container navbar navbar-background">
             <div class="navbar-brand">
                 <div class="navbar-burger">
                     <div>
@@ -9,15 +9,15 @@
                 </div>
             </div>
             <div class="navbar-menu">
-                <div class="navbar-start go-home" @click="$router.push({name: 'HelloWorld'})">
+                <div class="navbar-start go-home" @click="$router.push({name: 'Students'})">
                     <div class="nav-bar-flex">
-                    <img class="my-logo" :src="logo" alt="logo"/>
-                    <span class="my-logo-description">Ahead With English</span>
+                        <img class="my-logo" :src="logo" alt="logo"/>
+                        <span class="my-logo-description">Ahead With English</span>
                     </div>
                 </div>
                 <div class="navbar-end" v-if="isLoggedIn">
                     <div class="navbar-item">
-                        <router-link to="/login">Hello</router-link>
+                        <router-link to="/">Students</router-link>
                     </div>
                     <div class="navbar-item" @click="logout">
                         <router-link to="/login">Logout</router-link>
@@ -42,13 +42,13 @@
             }
         },
         methods: {
-            logout() {
+            logout () {
                 localStorage.clear()
                 this.$router.push({name: 'login'})
             }
         },
         computed: {
-            isLoggedIn() {
+            isLoggedIn () {
                 return this.$store.getters['login/getLoggedIn']
             }
         }
@@ -69,11 +69,17 @@
         height: 100%;
         width: 120%;
     }
-    
+
     .go-home {
         &:hover {
             cursor: pointer;
-         }
+        }
+    }
+
+    .navbar-background {
+        -webkit-box-shadow: 0px 1px 14px 2px rgba(102, 102, 102, 0.83);
+        -moz-box-shadow: 0px 1px 14px 2px rgba(102, 102, 102, 0.83);
+        box-shadow: 0px 1px 14px 2px rgba(102, 102, 102, 0.83);
     }
 
 </style>
