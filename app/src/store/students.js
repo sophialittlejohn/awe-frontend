@@ -7,7 +7,8 @@ const students = {
         students: [],
         errors: {},
         studentDetail: {},
-        searchFilter: 'first name'
+        searchFilter: 'first name',
+        emailAddress: []
     },
     mutations: {
         setStudents (state, payload) {
@@ -21,6 +22,10 @@ const students = {
         },
         setActiveFilter (state, payload) {
             state.searchFilter = payload
+        },
+        setEmailAddress (state, payload) {
+            console.log('email from mutation', payload)
+            state.emailAddress = payload
         }
     },
     actions: {
@@ -35,11 +40,12 @@ const students = {
                 })
         },
         fetchCurrentStudents ({commit}, args) {
-            return Vue.http.get(`students/current/?${args.order}=true`, {Authorization: Vue.http.headers.common.Authorization})
+            return Vue.http.get(`students/current/?desc=true`, {Authorization: Vue.http.headers.common.Authorization})
                 .then(response => {
                     commit('setStudents', response.body)
                     return response
                 }).catch(err => {
+                    console.log('in the error', err.body)
                     commit('setErrors', err.body)
                     throw err
                 })
@@ -87,12 +93,30 @@ const students = {
                     commit('setErrors', err.body)
                     throw err
                 })
+        },
+        fetchStudentsOrderStartDate ({commit}, args) {
+            let url = ''
+            if (args.filt === 'asc') {
+                url = `students/?current=all_asc`
+            } else if (args.filt === 'desc') {
+                url = `students/?current=all_desc`
+            } else {
+                url = `students/`
+            }
+            return Vue.http.get(url, {Authorization: Vue.http.headers.common.Authorization})
+                .then(response => {
+                    commit('setStudents', response.body)
+                }).catch(err => {
+                    commit('setErrors', err.body)
+                    throw err
+                })
         }
     },
     getters: {
         getStudents: state => state.students,
         getStudentDetail: state => state.studentDetail,
-        getActiveFilter: state => state.searchFilter
+        getActiveFilter: state => state.searchFilter,
+        getEmails: state => state.emailAddress
     },
 }
 

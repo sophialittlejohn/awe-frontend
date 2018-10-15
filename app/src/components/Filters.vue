@@ -1,7 +1,7 @@
 <template>
     <div class="field">
         <div class="control">
-            <div class="select is-primary is-large is-one-quarter">
+            <div class="select is-large is-one-quarter">
                 <select @change="changeSel">
                     <option v-for="filt in filters">{{filt.label}}</option>
                 </select>
@@ -29,7 +29,6 @@
         },
         methods: {
             changeSel (e) {
-                console.log('here', e.target.value)
                 this.$store.commit('students/setActiveFilter', e.target.value)
             }
         }

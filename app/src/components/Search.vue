@@ -1,7 +1,7 @@
 <template>
     <div class="field">
         <div class="control my-input columns has-icons-left">
-            <input class="input is-large column is-primary is-three-quarters" type="text" :placeholder="searchPlaceholder()" v-model="searchText" >
+            <input class="input is-large column is-three-quarters" type="text" :placeholder="searchPlaceholder()" v-model="searchText" >
              <span class="icon is-small is-left"><i class="fas fa-search"></i></span>
             <Filters />
         </div>

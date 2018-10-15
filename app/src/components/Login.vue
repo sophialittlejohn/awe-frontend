@@ -38,7 +38,7 @@
         methods: {
             async login () {
                 await this.$store.dispatch('login/fetchTokens', {username: this.username, password: this.password})
-                this.$router.push({name: 'Students'})
+                this.$router.push({name: 'TabNav'})
             },
         },
         computed: {

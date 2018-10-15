@@ -1,72 +1,94 @@
 <template>
-    <div class="container">
-        <h1>Student Overview</h1>
+    <div class="">
         <Search/>
-        <table class="table table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>First Name</th>
-                <th @click="toggleLastNameOrder">Last Name
-                    <span class="icon is-small ordering">
-                        <i v-if="lastNameOrder ==='asc'" class="fas fa-arrow-circle-down icon-placement"></i>
-                        <i v-if="lastNameOrder ==='desc'" class="fas fa-arrow-circle-up icon-placement"></i>
+        <div class="table-container">
+            <table class="my-table table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th @click="toggleLastNameOrder">Last Name
+                        <span class="icon is-small ordering">
+                        <!--todo: fix the icon-->
+                        <i v-if="lastNameOrder ==='asc'" class="fas icon-placement"
+                           :class="lastNameOrder ==='asc' ? 'fa-arrow-circle-down' : 'fa-arrow-circle-up'"></i>
                     </span>
-                </th>
-                <th>Email</th>
-                <th>Mother</th>
-                <th>Father</th>
-                <th>Registered</th>
-                <th @click="toggleStartDateOrder">Start Date
-                    <span class="icon is-small ordering">
-                        <i v-if="startOrder ==='asc'" class="fas fa-arrow-circle-down icon-placement"></i>
-                        <i v-if="startOrder ==='desc'" class="fas fa-arrow-circle-up icon-placement"></i>
+                    </th>
+                    <th><span class="email-select">Email</span></th>
+                    <th>Mother</th>
+                    <th>Father</th>
+                    <th>Registered</th>
+                    <th @click="toggleStartDateOrder">Start Date
+                        <span class="icon is-small ordering">
+                        <i class="fas icon-placement"
+                           :class="startOrder ==='asc' ? 'fa-arrow-circle-down' : 'fa-arrow-circle-up'"></i>
                     </span>
-                </th>
-            </tr>
-            </thead>
-            <tfoot>
-            <tr>
-                <th>Total: {{getStudents.length}}</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Mother</th>
-                <th>Father</th>
-                <th>Registered</th>
-                <th>Start Date</th>
-            </tr>
-            </tfoot>
-            <tbody>
-            <tr v-for="student in getStudents" @click="viewStudentDetail(student.id)" :key="student.id">
-                <th>{{getStudents.indexOf(student) + 1}}</th>
-                <td>{{student.first_name}}</td>
-                <td>{{student.last_name}}</td>
-                <td>{{student.email}}</td>
-                <td>{{student.mother_name}}</td>
-                <td>{{student.father_name}}</td>
-                <td v-if="student.registered" class="registered">Yes</td>
-                <td v-else class="not-registered">No</td>
-                <td>{{student.start_date}}</td>
-            </tr>
-            </tbody>
-        </table>
+                    </th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Total: {{getStudents.length}}</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Mother</th>
+                    <th>Father</th>
+                    <th>Registered</th>
+                    <th>Start Date</th>
+                </tr>
+                </tfoot>
+                <tbody v-for="student in getStudents">
+                <tr :key="student.id" @click="viewStudentDetail(student.id)">
+                    <th>{{getStudents.indexOf(student) + 1}}</th>
+                    <td>{{student.first_name}}</td>
+                    <td>{{student.last_name}}</td>
+                    <!--<td><span class="email-select">{{student.email}}<input :id="student.email" v-model="selectedEmails" type="checkbox" name="email" :value="student.email"/></span></td>-->
+                    <td>
+                    <span class="email-select">{{student.email}}
+                        <input id="checkbox-1" class="checkbox-custom" name="checkbox-1" type="checkbox"
+                               @change="copyEmail(student.email)" @click.stop="viewStudentDetail">
+                        <!--<label for="checkbox-1" class="checkbox-custom-label"></label>-->
+                        <!--<i @click.stop="viewStudentDetail" @click="copyEmail(student.email)" class="far fa-plus-square my-icon"></i>-->
+                    </span>
+                    </td>
+                    <td>{{student.mother_name}}</td>
+                    <td>{{student.father_name}}</td>
+                    <td v-if="student.registered" class="registered">Yes</td>
+                    <td v-else class="not-registered">No</td>
+                    <td>{{student.start_date}}</td>
+                </tr>
+                <transition name="fade">
+                    <tr v-if="expanded && expanded === student.id">
+                        <td colspan="8" class="my-background">
+                            <StudentDetail :id="expanded"/>
+                        </td>
+                    </tr>
+                </transition>
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>
 
 <script>
     import Search from './Search'
     import Filters from "./Filters";
+    import StudentDetail from "./StudentDetail";
 
     export default {
         name: 'Students',
         data () {
             return {
                 startOrder: 'asc',
-                lastNameOrder: 'asc'
+                lastNameOrder: 'asc',
+                expanded: Number,
+                selectedEmails: [],
+                allChecked: false
             }
         },
         components: {
+            StudentDetail,
             Filters,
             Search
         },
@@ -79,23 +101,42 @@
             }
         },
         methods: {
+            copyEmail (email) {
+                this.selectedEmails.includes(email)
+                    ? this.selectedEmails = this.selectedEmails.filter(item => item !== email)
+                    : this.selectedEmails.push(email)
+                return this.$store.commit('students/setEmailAddress', this.selectedEmails)
+            },
             viewStudentDetail (studentId) {
-                this.$router.push({name: 'StudentDetail', params: {id: studentId}})
+                console.log('id', studentId)
+                this.expanded === studentId
+                    ? this.expanded = null
+                    : this.expanded = studentId
             },
             toggleStartDateOrder () {
                 this.startOrder === 'asc' ? this.startOrder = 'desc' : this.startOrder = 'asc'
-                this.$store.dispatch('students/fetchCurrentStudents', {order: this.startOrder})
+                this.$store.dispatch('students/fetchStudentsOrderStartDate', {filt: this.startOrder})
             },
             toggleLastNameOrder () {
+                // todo: make sure this works the way it should
                 this.lastNameOrder === 'asc' ? this.lastNameOrder = 'desc' : this.lastNameOrder = 'asc'
                 this.$store.getters['students/getStudents'].reverse()
-            }
+            },
         }
     }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+    .table-container {
+        height: 50vh;
+        overflow: scroll;
+    }
+
+    .my-table {
+        border-collapse: collapse;
+    }
+
     .not-registered {
         background-color: rgba(250, 50, 50, 0.1)
     }
@@ -114,4 +155,43 @@
     .icon-placement {
         margin-top: 5px;
     }
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+    }
+
+    .my-background {
+        border-radius: 5px;
+        /*background-color: rgba(0, 215, 177, 1);*/
+        background-color: rgb(0, 64, 168);
+        color: white
+    }
+
+    .email-select {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .my-icon {
+        margin-left: 3px;
+        color: lightgray;
+    }
+
+    .my-icon:active {
+        margin-left: 3px;
+        color: darkgray;
+    }
+
+    .my-icon::selection {
+        margin-left: 3px;
+        color: darkgray;
+    }
+
+
 </style>
+

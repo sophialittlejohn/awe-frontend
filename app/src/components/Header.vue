@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="navbar-menu">
-                <div class="navbar-start go-home" @click="$router.push({name: 'Students'})">
+                <div class="navbar-start go-home" @click="$router.push({name: 'TabNav'})">
                     <div class="nav-bar-flex">
                         <img class="my-logo" :src="logo" alt="logo"/>
                         <span class="my-logo-description">Ahead With English</span>
@@ -77,9 +77,9 @@
     }
 
     .navbar-background {
-        -webkit-box-shadow: 0px 1px 14px 2px rgba(102, 102, 102, 0.83);
-        -moz-box-shadow: 0px 1px 14px 2px rgba(102, 102, 102, 0.83);
-        box-shadow: 0px 1px 14px 2px rgba(102, 102, 102, 0.83);
+-webkit-box-shadow: 0px 0px 4px 1px rgba(173,173,173,0.3);
+-moz-box-shadow: 0px 0px 4px 1px rgba(173,173,173,0.3);
+box-shadow: 0px 0px 4px 1px rgba(173,173,173,0.3);
     }
 
 </style>
