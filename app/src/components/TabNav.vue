@@ -1,16 +1,20 @@
 <template>
     <div class="container">
-        <h1>{{activeTab.replace(/^\w/, c => c.toUpperCase())}} Students Overview</h1>
         <div class="main-container">
+            <h1>AWE Student Management</h1>
+            <hr/>
             <div class="tab-container">
                 <div class="tab" :class="activeTab==='all' ? 'activeTab' : '' " @click="renderAll">All</div>
                 <div class="tab" :class="activeTab==='current' ? 'activeTab' : '' " @click="renderCurrent">Current</div>
                 <div class="tab" :class="activeTab==='past' ? 'activeTab' : '' " @click="renderPast">Past</div>
                 <div class="tab" :class="activeTab==='staff' ? 'activeTab' : '' " @click="renderStaff">Staff</div>
+                <div class="logout">
+                    <router-link @click="logout" to="/login">Logout</router-link>
+                </div>
             </div>
             <div class="active-page">
-                <Students />
-                <SelectedEmails />
+                <Students/>
+                <SelectedEmails/>
             </div>
         </div>
     </div>
@@ -21,45 +25,51 @@
 
     import Students from "./Students";
     import SelectedEmails from "./SelectedEmails";
+    import Search from "./Search";
 
     export default {
         name: "TabNav",
         components: {SelectedEmails, Students},
-        data () {
+        data() {
             return {
                 activeTab: 'all'
             }
         },
         methods: {
-            renderAll () {
+            renderAll() {
                 this.activeTab = 'all'
                 this.$store.dispatch('students/fetchStudents')
             },
-            renderCurrent () {
+            renderCurrent() {
                 this.activeTab = 'current'
                 this.$store.dispatch('students/fetchCurrentStudents', 'asc')
             },
-            renderPast () {
+            renderPast() {
                 this.activeTab = 'past'
                 this.$store.dispatch('students/fetchPastStudents')
             },
-            renderStaff () {
+            renderStaff() {
                 this.activeTab = 'staff'
                 // this.$store.dispatch('students/fetchCurrentStudents', 'asc')
+            },
+            logout() {
+                localStorage.clear()
+                this.$router.push({name: 'login'})
             }
         }
     }
 </script>
 
 <style scoped lang="scss">
+    @import "../scss/main";
+
     .main-container {
-        background-color: rgb(111, 181, 240);
+        background-color: $color-bg;
         padding: 10px;
         border-radius: 5px;
     }
 
     .tab-container {
-        /*border: 1px solid rgba(5, 2, 5, 0.5);*/
         margin-top: 20px;
         display: flex;
     }
@@ -87,5 +97,13 @@
         background-color: white;
         padding: 10px;
         border-radius: 0 5px 5px 5px;
+    }
+
+    .logout {
+        display: flex;
+        flex: 1;
+        align-self: center;
+        justify-content: flex-end;
+        margin-right: 10px;
     }
 </style>

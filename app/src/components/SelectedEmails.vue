@@ -1,31 +1,47 @@
 <template>
-    <div class="tags">
-        <span>Hello</span>
-        <div v-for="email in emails" class="tag">{{email}}</div>
+    <div class="container">
+        <h2 style="margin-right: 10px;">Selected Emails:</h2>
+        <div class="tags">
+            <span v-for="email in emails" class="tag is-medium my-tag">
+                {{email}}
+                <button @click="removeEmail(email)" class="delete is-small"></button>
+            </span>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
         name: "SelectedEmails",
-        data () {
-            return {
-                emails: []
+        computed: {
+            emails() {
+                return this.$store.getters['students/getEmails']
             }
         },
-        updated () {
-            console.log('here',     this.$store.getters['students/getEmail'])
-            this.emails = this.$store.getters['students/getEmail']
+        watch: {
+            emails: () => {
+                console.log('watching emails ')
+            }
         },
-        // computed: {
-        //     getEmails() {
-        //         console.log('hello', this.$store.getters['students/getEmail'])
-        //         return this.$store.getters['students/getEmail']
-        //     },
-        // },
+        methods: {
+            removeEmail(email) {
+                console.log('removing', email)
+                return this.$store.commit('students/removeEmailAddress', email)
+            }
+        }
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+    @import "../scss/main";
 
+    .container {
+        margin: 10px 0 0 0;
+        display: flex;
+    }
+
+    .my-tag {
+        background-color: $color-primary;
+        color: white;
+    }
 </style>

@@ -40,7 +40,9 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    /*@import '../scss/main';*/
+
     .my-input {
         margin: 10px 0;
         justify-content: space-between;

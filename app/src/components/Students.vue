@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div>
         <Search/>
         <div class="table-container">
             <table class="my-table table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -43,13 +43,9 @@
                     <th>{{getStudents.indexOf(student) + 1}}</th>
                     <td>{{student.first_name}}</td>
                     <td>{{student.last_name}}</td>
-                    <!--<td><span class="email-select">{{student.email}}<input :id="student.email" v-model="selectedEmails" type="checkbox" name="email" :value="student.email"/></span></td>-->
                     <td>
                     <span class="email-select">{{student.email}}
-                        <input id="checkbox-1" class="checkbox-custom" name="checkbox-1" type="checkbox"
-                               @change="copyEmail(student.email)" @click.stop="viewStudentDetail">
-                        <!--<label for="checkbox-1" class="checkbox-custom-label"></label>-->
-                        <!--<i @click.stop="viewStudentDetail" @click="copyEmail(student.email)" class="far fa-plus-square my-icon"></i>-->
+                        <img :src="getEmails.includes(student.email) ? grayPlusButton : greenPlusButton" style="height: 20px; cursor: pointer" alt="add" @click="copyEmail(student.email)" @click.stop="viewStudentDetail"/>
                     </span>
                     </td>
                     <td>{{student.mother_name}}</td>
@@ -75,16 +71,20 @@
     import Search from './Search'
     import Filters from "./Filters";
     import StudentDetail from "./StudentDetail";
+    import greenPlusButton from '../assets/plus-button.svg'
+    import grayPlusButton from '../assets/gray-plus-button.svg'
 
     export default {
         name: 'Students',
-        data () {
+        data() {
             return {
                 startOrder: 'asc',
                 lastNameOrder: 'asc',
                 expanded: Number,
                 selectedEmails: [],
-                allChecked: false
+                allChecked: false,
+                greenPlusButton,
+                grayPlusButton
             }
         },
         components: {
@@ -92,32 +92,35 @@
             Filters,
             Search
         },
-        mounted () {
+        mounted() {
             this.$store.dispatch('students/fetchStudents')
         },
         computed: {
-            getStudents () {
+            getStudents() {
                 return this.$store.getters['students/getStudents']
+            },
+            getEmails() {
+                return this.$store.getters['students/getEmails']
             }
         },
         methods: {
-            copyEmail (email) {
+            copyEmail(email) {
                 this.selectedEmails.includes(email)
                     ? this.selectedEmails = this.selectedEmails.filter(item => item !== email)
                     : this.selectedEmails.push(email)
                 return this.$store.commit('students/setEmailAddress', this.selectedEmails)
             },
-            viewStudentDetail (studentId) {
+            viewStudentDetail(studentId) {
                 console.log('id', studentId)
                 this.expanded === studentId
                     ? this.expanded = null
                     : this.expanded = studentId
             },
-            toggleStartDateOrder () {
+            toggleStartDateOrder() {
                 this.startOrder === 'asc' ? this.startOrder = 'desc' : this.startOrder = 'asc'
                 this.$store.dispatch('students/fetchStudentsOrderStartDate', {filt: this.startOrder})
             },
-            toggleLastNameOrder () {
+            toggleLastNameOrder() {
                 // todo: make sure this works the way it should
                 this.lastNameOrder === 'asc' ? this.lastNameOrder = 'desc' : this.lastNameOrder = 'asc'
                 this.$store.getters['students/getStudents'].reverse()
