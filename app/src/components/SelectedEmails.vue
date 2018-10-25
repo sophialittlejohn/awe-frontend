@@ -1,6 +1,12 @@
 <template>
     <div class="container">
-        <h2 style="margin-right: 10px;">Selected Emails:</h2>
+        <h2 v-clipboard:copy="emails"
+            v-clipboard:success="onCopy"
+            v-clipboard:error="onError"
+            class="copy-email">
+            Copy Emails
+            <img :src="copyIcon" alt="copyIcon" style="height: 20px"/>
+        </h2>
         <div class="tags">
             <span v-for="email in emails" class="tag is-medium my-tag">
                 {{email}}
@@ -11,8 +17,15 @@
 </template>
 
 <script>
+    import copyIcon from '../assets/copy.svg'
+
     export default {
         name: "SelectedEmails",
+        data () {
+            return {
+                copyIcon,
+            }
+        },
         computed: {
             emails() {
                 return this.$store.getters['students/getEmails']
@@ -24,9 +37,14 @@
             }
         },
         methods: {
-            removeEmail(email) {
-                console.log('removing', email)
+            removeEmail (email) {
                 return this.$store.commit('students/removeEmailAddress', email)
+            },
+            onCopy () {
+                console.log('successful')
+            },
+            onError () {
+                console.log('failed')
             }
         }
     }
@@ -43,5 +61,13 @@
     .my-tag {
         background-color: $color-primary;
         color: white;
+        max-width: inherit
+    }
+
+    .copy-email {
+        margin-right: 10px;
+        &:hover {
+            cursor: pointer;
+        }
     }
 </style>
