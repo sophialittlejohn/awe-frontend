@@ -1,7 +1,7 @@
 <template>
     <div>
-        <Search/>
-        <div class="table-container">
+        <Search id="scroll"/>
+        <div class="table-container" id="container">
             <table class="my-table table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                 <thead>
                 <tr>
@@ -39,13 +39,18 @@
                 </tr>
                 </tfoot>
                 <tbody v-for="student in getStudents">
-                <tr :key="student.id" @click="viewStudentDetail(student.id)">
+                <tr
+                    :key="student.id"
+                    @click="viewStudentDetail(student.id)"
+                    v-scroll-to="'#scroll'">
                     <th>{{getStudents.indexOf(student) + 1}}</th>
                     <td>{{student.first_name}}</td>
                     <td>{{student.last_name}}</td>
                     <td>
                     <span class="email-select">{{student.email}}
-                        <img :src="getEmails.includes(student.email) ? grayPlusButton : greenPlusButton" style="height: 20px; cursor: pointer" alt="add" @click="copyEmail(student.email)" @click.stop="viewStudentDetail"/>
+                        <img :src="getEmails.includes(student.email) ? grayPlusButton : greenPlusButton"
+                             style="height: 20px; cursor: pointer" alt="add" @click="copyEmail(student.email)"
+                             @click.stop="viewStudentDetail"/>
                     </span>
                     </td>
                     <td>{{student.mother_name}}</td>
@@ -55,8 +60,8 @@
                     <td>{{student.start_date}}</td>
                 </tr>
                 <transition name="fade">
-                    <tr v-if="expanded && expanded === student.id">
-                        <td colspan="8" class="my-background">
+                    <tr v-if="expanded && expanded  === student.id">
+                        <td colspan="8" class="student-detail">
                             <StudentDetail :id="expanded"/>
                         </td>
                     </tr>
@@ -111,7 +116,6 @@
                 return this.$store.commit('students/setEmailAddress', this.selectedEmails)
             },
             viewStudentDetail(studentId) {
-                console.log('id', studentId)
                 this.expanded === studentId
                     ? this.expanded = null
                     : this.expanded = studentId
@@ -131,6 +135,8 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+    @import "../scss/main";
+
     .table-container {
         height: 50vh;
         overflow: scroll;
@@ -167,10 +173,10 @@
         opacity: 0;
     }
 
-    .my-background {
+    .student-detail {
         border-radius: 5px;
-        /*background-color: rgba(0, 215, 177, 1);*/
-        background-color: rgb(0, 64, 168);
+        /* background-color: rgba(0, 215, 177, 1); */
+        /* background-color: $color; */
         color: white
     }
 

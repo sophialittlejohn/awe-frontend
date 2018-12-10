@@ -13,6 +13,8 @@ Vue.config.productionTip = false
 Vue.use(VueResource);
 Vue.use(baseUrlPlugin);
 Vue.use(VueClipboard);
+Vue.use(VueScrollTo)
+
 Vue.http.options.root = baseUrl;
 Vue.http.headers.common['Authorization'] = `Bearer ${localStorage.getItem('accessToken')}`;
 

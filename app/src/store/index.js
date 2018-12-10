@@ -1,13 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import login from './login';
-import students from "./students";
+import students from './students';
+import aweClass from './aweClass';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-    modules: {
-        login,
-        students
-    },
+  modules: {
+    login,
+    students,
+    aweClass,
+  },
 });

@@ -1,14 +1,13 @@
 <template>
     <div class="field">
         <div class="control">
-            <div class="select is-large is-one-quarter">
+            <div class="select is-one-quarter">
                 <select @change="changeSel">
-                    <option v-for="filt in filters">{{filt.label}}</option>
+                    <option v-for="filt in filters" :key="filt.label">{{filt.label}}</option>
                 </select>
             </div>
         </div>
     </div>
-    <!--<select v-model="category" @change="renderCategory(category)">-->
 </template>
 
 <script>
@@ -36,5 +35,4 @@
 </script>
 
 <style scoped>
-
 </style>

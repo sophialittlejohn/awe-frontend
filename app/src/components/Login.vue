@@ -27,7 +27,7 @@
             <div>
                 Click to visit <a href="https://www.aheadwithenglish.ch">www.aheadwithenglish.ch</a>
             </div>
-            <div class="container">
+            <div class="container socials">
                 <img :src="facebookIcon" class="icon"/>
                 <img :src="instagramIcon" class="icon"/>
             </div>
@@ -36,68 +36,76 @@
 </template>
 
 <script>
-    import facebook_icon from '../assets/icon-facebook.svg'
-    import instagram_icon from '../assets/icon-instagram.svg'
+import facebook_icon from '../assets/icon-facebook.svg';
+import instagram_icon from '../assets/icon-instagram.svg';
 
-    export default {
-        name: 'login',
-        data () {
-            return {
-                username: '',
-                password: '',
-                facebookIcon: facebook_icon,
-                instagramIcon: instagram_icon
-            }
-        },
-        methods: {
-            async login () {
-                await this.$store.dispatch('login/fetchTokens', {username: this.username, password: this.password})
-                this.$router.push({name: 'TabNav'})
-            },
-        },
-        computed: {
-            errors () {
-                return this.$store.getters['login/getErrors']
-            },
-        },
-    }
+export default {
+  name: 'login',
+  data() {
+    return {
+      username: '',
+      password: '',
+      facebookIcon: facebook_icon,
+      instagramIcon: instagram_icon,
+    };
+  },
+  methods: {
+    async login() {
+      await this.$store.dispatch('login/fetchTokens', {
+        username: this.username,
+        password: this.password,
+      });
+      this.$router.push({ name: 'TabNav' });
+    },
+  },
+  computed: {
+    errors() {
+      return this.$store.getters['login/getErrors'];
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-    @import "~bulma";
-    @import "../scss/main";
+@import '~bulma';
+@import '../scss/main';
 
-    .my-input-field {
-        max-width: 400px;
-        margin: auto;
-    }
+.my-input-field {
+  max-width: 400px;
+  margin: auto;
+}
 
-    .my-container {
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        padding: 60px;
-        border-radius: 10px;
-        margin: 50px auto;
-        width: 50vw;
-    }
+.my-container {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 60px;
+  border-radius: 10px;
+  margin: 50px auto;
+  width: 50vw;
+}
 
-    .my-button {
-        background-color: $color-primary;
-        color: white;
-        margin-top: 10px;
-    }
+.my-button {
+  background-color: $color-primary;
+  color: white;
+  margin-top: 10px;
+}
 
-    h1 {
-        font-weight: 800;
-        font-size: 2em;
-        margin: 20px;
-    }
+h1 {
+  font-weight: 800;
+  font-size: 2em;
+  margin: 20px;
+}
 
-    .error-container {
-        margin: 20px;
-    }
+.error-container {
+  margin: 20px;
+}
 
-    .error {
-        color: red;
-    }
+.error {
+  color: red;
+}
 
+.socials {
+  max-width: 70px;
+  display: flex;
+  justify-content: space-between;
+}
 </style>

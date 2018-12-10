@@ -12,17 +12,22 @@ $color-shade: #FCBC80;
 
 $color-text: #343434;
 $color-bg: #F7E29C;
-$color-bg-light: #009fe1;
 
 // Fonts
 $font-stack-primary: 'Raleway', sans-serif;
 $font-stack-secondary: 'Bree Serif', serif;
 
-// Layout
-$max-width: 1000px;
 
 // Breakpoints (media queries)
 $break-xs: 575px;
 $break-s: 576px;
 $break-m: 768px;
 $break-l: 992px;
+
+// Font Sizes
+$font-xsmall: 12px;
+$font-small: 16px;
+$font-medium: 20px;
+$font-large: 24px;
+$font-xlarge: 38px;
+

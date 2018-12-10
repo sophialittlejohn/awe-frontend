@@ -61,49 +61,50 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../scss/main";
+@import '../scss/main';
 
-    .main-container {
-        background-color: $color-bg;
-        padding: 10px;
-        border-radius: 5px;
-    }
+.main-container {
+  background-color: $color-bg;
+  padding: 10px;
+  border-radius: 5px;
+}
 
-    .tab-container {
-        margin-top: 20px;
-        display: flex;
-    }
+.tab-container {
+  margin-top: -10px;
+  display: flex;
+}
 
-    .tab {
-        font-size: 1.5em;
-        width: 100px;
-        transition: background-color ease 0.3s;
-    }
+.tab {
+  font-size: 1.3em;
+  width: 100px;
+  transition: background-color ease 0.3s;
+}
 
-    .tab, .activeTab {
-        padding: 5px;
-        border-radius: 5px 5px 0 0;
-    }
+.tab,
+.activeTab {
+  padding: 5px;
+  border-radius: 5px 5px 0 0;
+}
 
-    .activeTab {
-        background-color: white;
-    }
+.activeTab {
+  background-color: white;
+}
 
-    .my-title {
-        position: fixed;
-    }
+.my-title {
+  position: fixed;
+}
 
-    .active-page {
-        background-color: white;
-        padding: 10px;
-        border-radius: 0 5px 5px 5px;
-    }
+.active-page {
+  background-color: white;
+  padding: 10px;
+  border-radius: 0 5px 5px 5px;
+}
 
-    .logout {
-        display: flex;
-        flex: 1;
-        align-self: center;
-        justify-content: flex-end;
-        margin-right: 10px;
-    }
+.logout {
+  display: flex;
+  flex: 1;
+  align-self: center;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
 </style>
